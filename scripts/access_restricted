@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+flyctl secrets set AUTH_DEFAULT_ROLES=status-only
+

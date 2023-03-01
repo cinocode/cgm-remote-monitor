@@ -1,0 +1,67 @@
+# fly.toml app configuration file generated for naito-scouto on 2023-06-03T11:09:21+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "naito-scouto"
+primary_region = "cdg"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
+
+[env]
+  API_SECRET = ""
+  MONGODB_URI = ""
+  ALARM_HIGH = "on"
+  ALARM_LOW = "on"
+  ALARM_TIMEAGO_URGENT = "on"
+  ALARM_TIMEAGO_URGENT_MINS = "30"
+  ALARM_TIMEAGO_WARN = "on"
+  ALARM_TIMEAGO_WARN_MINS = "15"
+  ALARM_TYPES = "simple"
+  ALARM_URGENT_HIGH = "on"
+  ALARM_URGENT_LOW = "on"
+  AUTH_DEFAULT_ROLES = "status-only"
+  BG_HIGH = "280"
+  BG_LOW = "55"
+  BG_TARGET_BOTTOM = "70"
+  BG_TARGET_TOP = "180"
+  BOLUS_RENDER_OVER = "1"
+  BRIDGE_PASSWORD = "CHANGE ME!"
+  BRIDGE_SERVER = "US"
+  BRIDGE_USER_NAME = "CHANGE ME!"
+  CUSTOM_TITLE = "Naito Scouto(le)"
+  DEVICESTATUS_ADVANCED = "t"
+  DISPLAY_UNITS = "mg/dl"
+  ENABLE = "careportal basal dbsize rawbg iob maker cob bwp cage iage sage boluscalc pushover treatmentnotify loop pump profile food openaps bage alexa override speech cors"
+  NIGHT_MODE = "off"
+  SHOW_FORECAST = "openaps"
+  SHOW_PLUGINS = "careportal dbsize"
+  THEME = "colors"
+  TIME_FORMAT = "24"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 1337
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
